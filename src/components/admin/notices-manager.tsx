@@ -387,22 +387,23 @@ export default function NoticesManager() {
             Notices ({filteredNotices?.length || 0})
           </CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-4">
           {isLoading ? (
             <div className="text-center py-8">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
               <p className="text-muted-foreground">Loading notices...</p>
             </div>
           ) : (
-            <Table>
-              <TableHeader>
+            <div className="overflow-x-auto">
+              <Table className="min-w-max">
+                <TableHeader>
                 <TableRow>
-                  <TableHead>Title</TableHead>
-                  <TableHead>Category</TableHead>
-                  <TableHead>Priority</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Created</TableHead>
-                  <TableHead className="text-right">Actions</TableHead>
+                  <TableHead className="min-w-[250px]">Title</TableHead>
+                  <TableHead className="min-w-[120px]">Category</TableHead>
+                  <TableHead className="min-w-[100px]">Priority</TableHead>
+                  <TableHead className="min-w-[150px]">Status</TableHead>
+                  <TableHead className="min-w-[120px]">Created</TableHead>
+                  <TableHead className="text-right min-w-[120px]">Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -464,7 +465,8 @@ export default function NoticesManager() {
                   </TableRow>
                 ))}
               </TableBody>
-            </Table>
+              </Table>
+            </div>
           )}
         </CardContent>
       </Card>
