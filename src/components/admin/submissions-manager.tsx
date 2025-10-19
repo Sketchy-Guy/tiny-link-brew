@@ -7,8 +7,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { CheckCircle, XCircle, Eye, Star, Clock, FileText } from "lucide-react";
+import { CheckCircle, XCircle, Eye, Star, Clock, FileText, Sparkles } from "lucide-react";
 import { toast } from "sonner";
+import { motion } from "framer-motion";
 
 interface Submission {
   id: string;
@@ -109,22 +110,27 @@ export function SubmissionsManager() {
   };
 
   const SubmissionCard = ({ submission }: { submission: Submission }) => (
-    <Card className="hover:shadow-lg transition-shadow">
+    <Card className="hover:shadow-2xl transition-all duration-300 border-2 hover:border-primary/30 overflow-hidden group">
+      <div className="h-1 bg-gradient-to-r from-primary via-secondary to-primary" />
       <CardHeader>
-        <div className="flex items-start justify-between">
-          <div>
-            <CardTitle className="text-lg">{submission.title}</CardTitle>
-            <CardDescription>
-              By {submission.profiles?.full_name || 'Unknown'} • {submission.department}
+        <div className="flex items-start justify-between gap-4">
+          <div className="flex-1 min-w-0">
+            <CardTitle className="text-xl group-hover:text-primary transition-colors truncate">
+              {submission.title}
+            </CardTitle>
+            <CardDescription className="flex items-center gap-2 mt-1">
+              <span className="font-medium">{submission.profiles?.full_name || 'Unknown'}</span>
+              <span>•</span>
+              <span className="truncate">{submission.department}</span>
             </CardDescription>
           </div>
-          <div className="flex items-center gap-2">
-            <Badge className={`${getStatusColor(submission.status)} capitalize`}>
+          <div className="flex flex-col items-end gap-2 flex-shrink-0">
+            <Badge className={`${getStatusColor(submission.status)} capitalize font-semibold`}>
               {submission.status}
             </Badge>
             {submission.is_featured && (
-              <Badge className="bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200">
-                <Star className="h-3 w-3 mr-1" />
+              <Badge className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white">
+                <Star className="h-3 w-3 mr-1 fill-current" />
                 Featured
               </Badge>
             )}
@@ -215,34 +221,55 @@ export function SubmissionsManager() {
   const rejectedSubmissions = submissions.filter(s => s.status === 'rejected');
 
   return (
-    <div className="space-y-6">
-      <div className="text-center">
-        <h2 className="text-3xl font-bold mb-4">Student Submissions Manager</h2>
-        <p className="text-muted-foreground">Review and manage student creative work submissions</p>
-      </div>
+    <div className="space-y-8">
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="text-center"
+      >
+        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-primary/10 to-secondary/10 border border-primary/20 mb-4">
+          <Sparkles className="w-4 h-4 text-primary" />
+          <span className="text-sm font-medium">Creative Works Management</span>
+        </div>
+        <h2 className="text-4xl font-bold mb-3 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+          Student Submissions Manager
+        </h2>
+        <p className="text-muted-foreground text-lg">Review and manage student creative work submissions</p>
+      </motion.div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card className="text-center">
-          <CardContent className="p-4">
-            <Clock className="h-8 w-8 text-yellow-500 mx-auto mb-2" />
-            <div className="text-2xl font-bold text-yellow-600">{pendingSubmissions.length}</div>
-            <div className="text-sm text-muted-foreground">Pending Review</div>
-          </CardContent>
-        </Card>
-        <Card className="text-center">
-          <CardContent className="p-4">
-            <CheckCircle className="h-8 w-8 text-green-500 mx-auto mb-2" />
-            <div className="text-2xl font-bold text-green-600">{approvedSubmissions.length}</div>
-            <div className="text-sm text-muted-foreground">Approved</div>
-          </CardContent>
-        </Card>
-        <Card className="text-center">
-          <CardContent className="p-4">
-            <XCircle className="h-8 w-8 text-red-500 mx-auto mb-2" />
-            <div className="text-2xl font-bold text-red-600">{rejectedSubmissions.length}</div>
-            <div className="text-sm text-muted-foreground">Rejected</div>
-          </CardContent>
-        </Card>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
+          <Card className="relative overflow-hidden border-2 hover:shadow-xl transition-all">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-yellow-500/20 to-orange-500/10 rounded-bl-full" />
+            <CardContent className="p-6 text-center relative z-10">
+              <Clock className="h-12 w-12 text-yellow-500 mx-auto mb-3" />
+              <div className="text-4xl font-bold text-yellow-600 mb-1">{pendingSubmissions.length}</div>
+              <div className="text-sm font-medium text-muted-foreground">Pending Review</div>
+            </CardContent>
+          </Card>
+        </motion.div>
+        
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
+          <Card className="relative overflow-hidden border-2 hover:shadow-xl transition-all">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-green-500/20 to-emerald-500/10 rounded-bl-full" />
+            <CardContent className="p-6 text-center relative z-10">
+              <CheckCircle className="h-12 w-12 text-green-500 mx-auto mb-3" />
+              <div className="text-4xl font-bold text-green-600 mb-1">{approvedSubmissions.length}</div>
+              <div className="text-sm font-medium text-muted-foreground">Approved</div>
+            </CardContent>
+          </Card>
+        </motion.div>
+        
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
+          <Card className="relative overflow-hidden border-2 hover:shadow-xl transition-all">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-red-500/20 to-pink-500/10 rounded-bl-full" />
+            <CardContent className="p-6 text-center relative z-10">
+              <XCircle className="h-12 w-12 text-red-500 mx-auto mb-3" />
+              <div className="text-4xl font-bold text-red-600 mb-1">{rejectedSubmissions.length}</div>
+              <div className="text-sm font-medium text-muted-foreground">Rejected</div>
+            </CardContent>
+          </Card>
+        </motion.div>
       </div>
 
       <Tabs defaultValue="pending" className="space-y-4">
