@@ -358,17 +358,18 @@ const CreativePanel = () => {
                 </CardContent>
               </Card>
             </motion.div>
-            
-            <StudentSubmissionForm 
-              isOpen={isSubmissionFormOpen} 
-              onClose={() => {
-                setIsSubmissionFormOpen(false);
-                fetchCreativeWorks(); // Refresh works after submission
-              }} 
-            />
           </div>
         </div>
       </div>
+
+      {/* Submission Form Dialog - Outside grid for proper overlay */}
+      <StudentSubmissionForm 
+        isOpen={isSubmissionFormOpen} 
+        onClose={() => {
+          setIsSubmissionFormOpen(false);
+          fetchCreativeWorks(); // Refresh works after submission
+        }} 
+      />
     </section>
   );
 };
