@@ -140,24 +140,21 @@ const App = () => (
               <Route path="/departments/civil" element={<CivilDepartment />} />
               <Route path="/departments/mba" element={<MBADepartment />} />
               
+              {/* Campus Life Pages */}
               <Route path="/campus-life/overview" element={<Overview />} />
               <Route path="/campus-life/sports" element={<Sports />} />
               <Route path="/campus-life/hostel" element={<Hostel />} />
               <Route path="/campus-life/wellness" element={<Wellness />} />
               <Route path="/campus-life/governance" element={<Governance />} />
               <Route path="/campus-life/events" element={<Events />} />
-              <Route path="/campus-life/activities" element={<Events />} />
               <Route path="/campus-life/amenities" element={<Amenities />} />
               <Route path="/campus-life/publications" element={<Publications />} />
               <Route path="/campus-life/festivals" element={<Festivals />} />
-        <Route path="/campus-life/womens-forum" element={<WomensForum />} />
-        <Route path="/campus-life/social-consciousness" element={<SocialConsciousness />} />
-        <Route path="/campus-life/other-facilities" element={<OtherFacilities />} />
+              <Route path="/campus-life/womens-forum" element={<WomensForum />} />
               <Route path="/campus-life/clubs" element={<Clubs />} />
+              <Route path="/campus-life/student-activities" element={<StudentActivities />} />
               <Route path="/campus-life/innovation" element={<Innovation />} />
-              <Route path="/campus-life/social" element={<SocialConsciousness />} />
               <Route path="/campus-life/social-consciousness" element={<SocialConsciousness />} />
-              <Route path="/campus-life/facilities" element={<OtherFacilities />} />
               <Route path="/campus-life/other-facilities" element={<OtherFacilities />} />
               
               {/* Contact Page */}
@@ -165,10 +162,6 @@ const App = () => (
               
               {/* Admin Login */}
               <Route path="/admin/login" element={<AdminLogin />} />
-              
-              {/* Campus Life Pages */}
-              <Route path="/campus-life/student-activities" element={<StudentActivities />} />
-              <Route path="/campus-life/innovation" element={<Innovation />} />
               
               {/* Admin Routes */}
               <Route path="/admin" element={<AdminLayout />}>
