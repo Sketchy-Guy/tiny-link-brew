@@ -225,16 +225,41 @@ export function SubmissionsManager() {
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="text-center"
+        className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary/5 via-secondary/5 to-primary/5 p-8 border-2 border-primary/10"
       >
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-primary/10 to-secondary/10 border border-primary/20 mb-4">
-          <Sparkles className="w-4 h-4 text-primary" />
-          <span className="text-sm font-medium">Creative Works Management</span>
+        <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-primary/10 to-transparent rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-secondary/10 to-transparent rounded-full blur-3xl" />
+        
+        <div className="relative z-10 text-center max-w-4xl mx-auto">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-primary/20 to-secondary/20 border-2 border-primary/30 mb-6 shadow-lg">
+            <Sparkles className="w-5 h-5 text-primary" />
+            <span className="text-sm font-bold tracking-wide">STUDENT CREATIVITY HUB</span>
+          </div>
+          
+          <h2 className="text-5xl font-black mb-4 bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent">
+            Submissions Manager
+          </h2>
+          
+          <div className="space-y-3 text-muted-foreground">
+            <p className="text-lg font-medium">
+              Review, approve, and showcase exceptional student creative work
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-4 text-sm">
+              <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-background/50 backdrop-blur">
+                <CheckCircle className="w-4 h-4 text-green-500" />
+                <span>Approve Quality Work</span>
+              </div>
+              <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-background/50 backdrop-blur">
+                <Star className="w-4 h-4 text-yellow-500" />
+                <span>Feature Best Submissions</span>
+              </div>
+              <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-background/50 backdrop-blur">
+                <Eye className="w-4 h-4 text-blue-500" />
+                <span>Public Gallery Display</span>
+              </div>
+            </div>
+          </div>
         </div>
-        <h2 className="text-4xl font-bold mb-3 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-          Student Submissions Manager
-        </h2>
-        <p className="text-muted-foreground text-lg">Review and manage student creative work submissions</p>
       </motion.div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
