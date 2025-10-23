@@ -5,11 +5,14 @@ import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
+import { Progress } from '@/components/ui/progress';
 import { StudentSubmissionForm } from '@/components/student-submission-form';
 import { 
   User, Bell, Newspaper, BookOpen, Trophy, Calendar, 
   Users, DollarSign, Download, Home, Clock, CheckCircle,
-  AlertCircle, FileText, ChevronRight, Award
+  AlertCircle, FileText, ChevronRight, Award, GraduationCap,
+  TrendingUp, Target, BookMarked, Activity, Mail, Phone,
+  MapPin, UserCircle, Star, Zap
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -85,164 +88,439 @@ export default function StudentDashboard() {
   ];
 
   return (
-    <PageLayout
-      heroTitle="Student Dashboard"
-      heroSubtitle={`Welcome back, ${studentData.name}`}
-      heroDescription="Manage your academic journey all in one place"
-      heroHeight="small"
-      heroBadge={studentData.rollNumber}
-    >
-      <div className="space-y-8">
-        {/* Quick Actions */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <Button onClick={() => setIsSubmissionOpen(true)} className="h-auto py-4 flex-col gap-2">
-            <Trophy className="h-6 w-6" />
-            <span>Submit Work</span>
-          </Button>
-          <Button variant="outline" className="h-auto py-4 flex-col gap-2" asChild>
-            <a href="/">
-              <Home className="h-6 w-6" />
-              <span>Visit Main Site</span>
-            </a>
-          </Button>
-          <Button variant="outline" className="h-auto py-4 flex-col gap-2">
-            <DollarSign className="h-6 w-6" />
-            <span>Registration Fees</span>
-          </Button>
-          <Button variant="outline" className="h-auto py-4 flex-col gap-2">
-            <DollarSign className="h-6 w-6" />
-            <span>College Due</span>
-          </Button>
+    <div className="min-h-screen bg-gradient-to-br from-background via-secondary/20 to-accent/30">
+      {/* Modern Hero Header */}
+      <div className="hero-gradient relative overflow-hidden">
+        <div className="absolute inset-0 bg-grid-white/[0.05] bg-[size:20px_20px]" />
+        <div className="container relative py-8 md:py-12">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="space-y-4"
+          >
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+              <div>
+                <Badge className="mb-3 bg-primary-foreground/20 text-primary-foreground border-primary-foreground/30">
+                  {studentData.rollNumber}
+                </Badge>
+                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary-foreground">
+                  Welcome back, {studentData.name}!
+                </h1>
+                <p className="text-primary-foreground/80 mt-2 text-sm md:text-base">
+                  Your academic journey at a glance
+                </p>
+              </div>
+              <Button 
+                variant="secondary" 
+                className="gap-2 shadow-lg w-full md:w-auto"
+                asChild
+              >
+                <a href="/">
+                  <Home className="h-4 w-4" />
+                  Visit Main Site
+                </a>
+              </Button>
+            </div>
+
+            {/* Quick Stats Cards */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mt-6">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.1 }}
+                className="bg-primary-foreground/10 backdrop-blur-sm border border-primary-foreground/20 rounded-lg p-4"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-primary-foreground/20 rounded-lg">
+                    <GraduationCap className="h-5 w-5 text-primary-foreground" />
+                  </div>
+                  <div>
+                    <p className="text-xs text-primary-foreground/70">CGPA</p>
+                    <p className="text-xl font-bold text-primary-foreground">8.7</p>
+                  </div>
+                </div>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.2 }}
+                className="bg-primary-foreground/10 backdrop-blur-sm border border-primary-foreground/20 rounded-lg p-4"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-primary-foreground/20 rounded-lg">
+                    <Target className="h-5 w-5 text-primary-foreground" />
+                  </div>
+                  <div>
+                    <p className="text-xs text-primary-foreground/70">Attendance</p>
+                    <p className="text-xl font-bold text-primary-foreground">{studentData.attendance}</p>
+                  </div>
+                </div>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.3 }}
+                className="bg-primary-foreground/10 backdrop-blur-sm border border-primary-foreground/20 rounded-lg p-4"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-primary-foreground/20 rounded-lg">
+                    <BookMarked className="h-5 w-5 text-primary-foreground" />
+                  </div>
+                  <div>
+                    <p className="text-xs text-primary-foreground/70">Semester</p>
+                    <p className="text-xl font-bold text-primary-foreground">6th</p>
+                  </div>
+                </div>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.4 }}
+                className="bg-primary-foreground/10 backdrop-blur-sm border border-primary-foreground/20 rounded-lg p-4"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-primary-foreground/20 rounded-lg">
+                    <Users className="h-5 w-5 text-primary-foreground" />
+                  </div>
+                  <div>
+                    <p className="text-xs text-primary-foreground/70">Club</p>
+                    <p className="text-sm font-bold text-primary-foreground truncate">Coding Club</p>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          </motion.div>
         </div>
+      </div>
+
+      <div className="container py-6 md:py-8 space-y-6">
+        {/* Quick Actions */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 md:gap-4"
+        >
+          <Button 
+            onClick={() => setIsSubmissionOpen(true)} 
+            className="h-auto py-4 md:py-6 flex-col gap-2 shadow-lg hover:shadow-xl transition-all"
+          >
+            <Trophy className="h-5 w-5 md:h-6 md:w-6" />
+            <span className="text-xs md:text-sm">Submit Work</span>
+          </Button>
+          
+          <Button 
+            variant="outline" 
+            className="h-auto py-4 md:py-6 flex-col gap-2 shadow-sm hover:shadow-md transition-all"
+          >
+            <div className="flex flex-col gap-1">
+              <DollarSign className="h-5 w-5 md:h-6 md:w-6 mx-auto" />
+              <span className="text-xs md:text-sm">Registration Fees</span>
+            </div>
+          </Button>
+
+          <Button 
+            variant="outline" 
+            className="h-auto py-4 md:py-6 flex-col gap-2 shadow-sm hover:shadow-md transition-all"
+          >
+            <div className="flex flex-col gap-1">
+              <DollarSign className="h-5 w-5 md:h-6 md:w-6 mx-auto" />
+              <span className="text-xs md:text-sm">College Due</span>
+            </div>
+          </Button>
+
+          <Button 
+            variant="outline" 
+            className="h-auto py-4 md:py-6 flex-col gap-2 shadow-sm hover:shadow-md transition-all"
+          >
+            <Download className="h-5 w-5 md:h-6 md:w-6" />
+            <span className="text-xs md:text-sm">ID Card</span>
+          </Button>
+
+          <Button 
+            variant="outline" 
+            className="h-auto py-4 md:py-6 flex-col gap-2 shadow-sm hover:shadow-md transition-all"
+          >
+            <Calendar className="h-5 w-5 md:h-6 md:w-6" />
+            <span className="text-xs md:text-sm">Events</span>
+          </Button>
+
+          <Button 
+            variant="outline" 
+            className="h-auto py-4 md:py-6 flex-col gap-2 shadow-sm hover:shadow-md transition-all"
+          >
+            <Bell className="h-5 w-5 md:h-6 md:w-6" />
+            <span className="text-xs md:text-sm">Alerts</span>
+          </Button>
+        </motion.div>
 
         {/* Main Content Tabs */}
-        <Tabs defaultValue="overview" className="w-full">
-          <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 lg:grid-cols-7">
-            <TabsTrigger value="overview">Overview</TabsTrigger>
-            <TabsTrigger value="academics">Academics</TabsTrigger>
-            <TabsTrigger value="attendance">Attendance</TabsTrigger>
-            <TabsTrigger value="clubs">Clubs</TabsTrigger>
-            <TabsTrigger value="notes">Notes</TabsTrigger>
-            <TabsTrigger value="updates">Updates</TabsTrigger>
-            <TabsTrigger value="timetable">Timetable</TabsTrigger>
-          </TabsList>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+        >
+          <Tabs defaultValue="overview" className="w-full">
+            <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-1 p-1 bg-card shadow-sm">
+              <TabsTrigger value="overview" className="text-xs md:text-sm">Overview</TabsTrigger>
+              <TabsTrigger value="profile" className="text-xs md:text-sm">Profile</TabsTrigger>
+              <TabsTrigger value="academics" className="text-xs md:text-sm">Academics</TabsTrigger>
+              <TabsTrigger value="attendance" className="text-xs md:text-sm">Attendance</TabsTrigger>
+              <TabsTrigger value="clubs" className="text-xs md:text-sm">Clubs</TabsTrigger>
+              <TabsTrigger value="notes" className="text-xs md:text-sm">Resources</TabsTrigger>
+              <TabsTrigger value="timetable" className="text-xs md:text-sm">Timetable</TabsTrigger>
+            </TabsList>
 
           {/* Overview Tab */}
-          <TabsContent value="overview" className="space-y-6">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              {/* Student Profile Card */}
-              <Card className="lg:col-span-1">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <User className="h-5 w-5" />
-                    My Profile
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div>
-                    <p className="text-sm text-muted-foreground">Name</p>
-                    <p className="font-medium">{studentData.name}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground">Roll Number</p>
-                    <p className="font-medium">{studentData.rollNumber}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground">Department</p>
-                    <p className="font-medium">{studentData.department}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground">Semester</p>
-                    <p className="font-medium">{studentData.semester}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground">Email</p>
-                    <p className="font-medium text-sm">{studentData.email}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground">Phone</p>
-                    <p className="font-medium">{studentData.phone}</p>
-                  </div>
-                  <Separator />
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-muted-foreground">Overall Attendance</span>
-                    <Badge variant="secondary" className="text-lg font-bold">{studentData.attendance}</Badge>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Quick Stats */}
-              <div className="lg:col-span-2 space-y-6">
-                <div className="grid grid-cols-2 gap-4">
-                  <Card>
-                    <CardHeader className="pb-3">
-                      <CardTitle className="text-sm font-medium">Current Club</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="text-2xl font-bold">{studentData.currentClub}</div>
-                      <p className="text-xs text-muted-foreground mt-1">Active Member</p>
-                    </CardContent>
-                  </Card>
-                  <Card>
-                    <CardHeader className="pb-3">
-                      <CardTitle className="text-sm font-medium">Current Semester</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="text-2xl font-bold">{studentData.semester}</div>
-                      <p className="text-xs text-muted-foreground mt-1">In Progress</p>
-                    </CardContent>
-                  </Card>
-                </div>
-
+          <TabsContent value="overview" className="space-y-6 mt-6">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6">
+              {/* Left Column - Notices & News */}
+              <div className="lg:col-span-2 space-y-4 md:space-y-6">
                 {/* Recent Notices */}
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <Bell className="h-5 w-5" />
-                      Recent Notices
+                <Card className="shadow-card hover:shadow-elegant transition-shadow">
+                  <CardHeader className="pb-3">
+                    <CardTitle className="flex items-center gap-2 text-lg md:text-xl">
+                      <div className="p-2 bg-primary/10 rounded-lg">
+                        <Bell className="h-5 w-5 text-primary" />
+                      </div>
+                      Important Notices
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-3">
-                    {notices.map((notice) => (
-                      <div key={notice.id} className="flex items-start gap-3 p-3 rounded-lg border">
-                        <AlertCircle className={`h-5 w-5 mt-0.5 ${notice.type === 'urgent' ? 'text-destructive' : 'text-primary'}`} />
-                        <div className="flex-1">
-                          <p className="font-medium">{notice.title}</p>
+                    {notices.map((notice, index) => (
+                      <motion.div
+                        key={notice.id}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: index * 0.1 }}
+                        className="flex items-start gap-3 p-3 md:p-4 rounded-lg border bg-gradient-to-r from-card to-accent/5 hover:shadow-md transition-all cursor-pointer"
+                      >
+                        <AlertCircle className={`h-5 w-5 mt-0.5 flex-shrink-0 ${notice.type === 'urgent' ? 'text-destructive' : 'text-primary'}`} />
+                        <div className="flex-1 min-w-0">
+                          <p className="font-medium text-sm md:text-base">{notice.title}</p>
                           <p className="text-xs text-muted-foreground mt-1">{notice.date}</p>
                         </div>
                         {notice.type === 'urgent' && (
-                          <Badge variant="destructive">Urgent</Badge>
+                          <Badge variant="destructive" className="flex-shrink-0">Urgent</Badge>
                         )}
-                      </div>
+                      </motion.div>
                     ))}
+                    <Button variant="outline" className="w-full mt-2">
+                      View All Notices
+                      <ChevronRight className="h-4 w-4 ml-2" />
+                    </Button>
                   </CardContent>
                 </Card>
 
-                {/* Recent News */}
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <Newspaper className="h-5 w-5" />
-                      Latest News
+                {/* Latest News */}
+                <Card className="shadow-card hover:shadow-elegant transition-shadow">
+                  <CardHeader className="pb-3">
+                    <CardTitle className="flex items-center gap-2 text-lg md:text-xl">
+                      <div className="p-2 bg-academic-green/10 rounded-lg">
+                        <Newspaper className="h-5 w-5 text-academic-green" />
+                      </div>
+                      News & Highlights
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-3">
-                    {news.map((item) => (
-                      <div key={item.id} className="flex items-start justify-between p-3 rounded-lg border">
-                        <div>
-                          <p className="font-medium">{item.title}</p>
-                          <div className="flex items-center gap-2 mt-1">
+                    {news.map((item, index) => (
+                      <motion.div
+                        key={item.id}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: index * 0.1 }}
+                        className="flex items-start justify-between gap-3 p-3 md:p-4 rounded-lg border bg-gradient-to-r from-card to-accent/5 hover:shadow-md transition-all cursor-pointer"
+                      >
+                        <div className="flex-1 min-w-0">
+                          <p className="font-medium text-sm md:text-base">{item.title}</p>
+                          <div className="flex items-center gap-2 mt-2 flex-wrap">
                             <Badge variant="outline" className="text-xs">{item.category}</Badge>
                             <span className="text-xs text-muted-foreground">{item.date}</span>
                           </div>
                         </div>
-                        <ChevronRight className="h-5 w-5 text-muted-foreground" />
-                      </div>
+                        <ChevronRight className="h-5 w-5 text-muted-foreground flex-shrink-0" />
+                      </motion.div>
                     ))}
+                    <Button variant="outline" className="w-full mt-2">
+                      View All News
+                      <ChevronRight className="h-4 w-4 ml-2" />
+                    </Button>
+                  </CardContent>
+                </Card>
+
+                {/* Performance Overview */}
+                <Card className="shadow-card hover:shadow-elegant transition-shadow bg-gradient-to-br from-card to-primary/5">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2 text-lg md:text-xl">
+                      <div className="p-2 bg-academic-gold/10 rounded-lg">
+                        <TrendingUp className="h-5 w-5 text-academic-gold" />
+                      </div>
+                      Academic Performance
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="text-center p-4 rounded-lg bg-primary/5 border border-primary/20">
+                        <p className="text-3xl font-bold text-primary">8.7</p>
+                        <p className="text-sm text-muted-foreground mt-1">Current CGPA</p>
+                      </div>
+                      <div className="text-center p-4 rounded-lg bg-academic-green/5 border border-academic-green/20">
+                        <p className="text-3xl font-bold text-academic-green">87.5%</p>
+                        <p className="text-sm text-muted-foreground mt-1">Attendance</p>
+                      </div>
+                    </div>
+                    <Separator className="my-4" />
+                    <div className="space-y-3">
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm">Semester Rank</span>
+                        <Badge variant="secondary">Top 10%</Badge>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm">Credits Completed</span>
+                        <Badge variant="secondary">102/180</Badge>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Right Column - Quick Info */}
+              <div className="lg:col-span-1 space-y-4 md:space-y-6">
+                {/* Profile Summary */}
+                <Card className="shadow-card hover:shadow-elegant transition-shadow bg-gradient-to-br from-card to-secondary/20">
+                  <CardHeader className="pb-3">
+                    <CardTitle className="flex items-center gap-2 text-lg">
+                      <UserCircle className="h-5 w-5 text-primary" />
+                      Quick Info
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-3">
+                    <div className="text-center pb-4 border-b">
+                      <div className="w-20 h-20 md:w-24 md:h-24 mx-auto bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center text-3xl md:text-4xl font-bold text-primary-foreground shadow-lg">
+                        {studentData.name.split(' ').map(n => n[0]).join('')}
+                      </div>
+                      <h3 className="font-bold text-lg md:text-xl mt-3">{studentData.name}</h3>
+                      <p className="text-sm text-muted-foreground">{studentData.rollNumber}</p>
+                    </div>
+                    
+                    <div className="space-y-2 text-sm">
+                      <div className="flex items-center gap-2 p-2 rounded-lg hover:bg-accent/10 transition-colors">
+                        <GraduationCap className="h-4 w-4 text-primary flex-shrink-0" />
+                        <span className="text-muted-foreground truncate">{studentData.department}</span>
+                      </div>
+                      <div className="flex items-center gap-2 p-2 rounded-lg hover:bg-accent/10 transition-colors">
+                        <BookMarked className="h-4 w-4 text-primary flex-shrink-0" />
+                        <span className="text-muted-foreground">{studentData.semester}</span>
+                      </div>
+                      <div className="flex items-center gap-2 p-2 rounded-lg hover:bg-accent/10 transition-colors">
+                        <Mail className="h-4 w-4 text-primary flex-shrink-0" />
+                        <span className="text-muted-foreground text-xs truncate">{studentData.email}</span>
+                      </div>
+                      <div className="flex items-center gap-2 p-2 rounded-lg hover:bg-accent/10 transition-colors">
+                        <Phone className="h-4 w-4 text-primary flex-shrink-0" />
+                        <span className="text-muted-foreground">{studentData.phone}</span>
+                      </div>
+                      <div className="flex items-center gap-2 p-2 rounded-lg hover:bg-accent/10 transition-colors">
+                        <Users className="h-4 w-4 text-primary flex-shrink-0" />
+                        <span className="text-muted-foreground">{studentData.currentClub}</span>
+                      </div>
+                    </div>
+
+                    <Button variant="outline" className="w-full mt-4">
+                      View Full Profile
+                    </Button>
+                  </CardContent>
+                </Card>
+
+                {/* Upcoming Events */}
+                <Card className="shadow-card hover:shadow-elegant transition-shadow">
+                  <CardHeader className="pb-3">
+                    <CardTitle className="flex items-center gap-2 text-lg">
+                      <Calendar className="h-5 w-5 text-primary" />
+                      Upcoming
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-3">
+                    <div className="p-3 rounded-lg bg-primary/5 border border-primary/20">
+                      <p className="font-medium text-sm">Mid-term Exams</p>
+                      <p className="text-xs text-muted-foreground mt-1">Starts in 5 days</p>
+                    </div>
+                    <div className="p-3 rounded-lg bg-accent/20 border border-accent">
+                      <p className="font-medium text-sm">Sports Day</p>
+                      <p className="text-xs text-muted-foreground mt-1">March 25, 2024</p>
+                    </div>
+                    <div className="p-3 rounded-lg bg-muted">
+                      <p className="font-medium text-sm">Coding Workshop</p>
+                      <p className="text-xs text-muted-foreground mt-1">March 22, 2024</p>
+                    </div>
                   </CardContent>
                 </Card>
               </div>
             </div>
+          </TabsContent>
+
+          {/* Profile Tab */}
+          <TabsContent value="profile" className="space-y-6 mt-6">
+            <Card className="shadow-card">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <User className="h-5 w-5" />
+                  Complete Profile
+                </CardTitle>
+                <CardDescription>Your detailed student information</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-4">
+                    <div>
+                      <p className="text-sm font-medium text-muted-foreground">Full Name</p>
+                      <p className="text-lg font-semibold mt-1">{studentData.name}</p>
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-muted-foreground">Roll Number</p>
+                      <p className="text-lg font-semibold mt-1">{studentData.rollNumber}</p>
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-muted-foreground">Department</p>
+                      <p className="text-lg font-semibold mt-1">{studentData.department}</p>
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-muted-foreground">Current Semester</p>
+                      <p className="text-lg font-semibold mt-1">{studentData.semester}</p>
+                    </div>
+                  </div>
+                  <div className="space-y-4">
+                    <div>
+                      <p className="text-sm font-medium text-muted-foreground">Email Address</p>
+                      <p className="text-lg font-semibold mt-1 break-all">{studentData.email}</p>
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-muted-foreground">Phone Number</p>
+                      <p className="text-lg font-semibold mt-1">{studentData.phone}</p>
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-muted-foreground">Current Club</p>
+                      <p className="text-lg font-semibold mt-1">{studentData.currentClub}</p>
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-muted-foreground">Overall Attendance</p>
+                      <p className="text-lg font-semibold mt-1">{studentData.attendance}</p>
+                    </div>
+                  </div>
+                </div>
+                <Separator className="my-6" />
+                <div className="flex gap-3">
+                  <Button className="flex-1">Edit Profile</Button>
+                  <Button variant="outline" className="flex-1">
+                    <Download className="h-4 w-4 mr-2" />
+                    Download ID Card
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
           </TabsContent>
 
           {/* Academics Tab */}
@@ -289,139 +567,289 @@ export default function StudentDashboard() {
           </TabsContent>
 
           {/* Attendance Tab */}
-          <TabsContent value="attendance" className="space-y-6">
-            <Card>
+          <TabsContent value="attendance" className="space-y-6 mt-6">
+            {/* Overall Attendance Summary */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <Card className="shadow-card bg-gradient-to-br from-primary/5 to-primary/10 border-primary/20">
+                <CardContent className="pt-6">
+                  <div className="text-center">
+                    <div className="inline-flex p-3 bg-primary/10 rounded-full mb-3">
+                      <Target className="h-8 w-8 text-primary" />
+                    </div>
+                    <p className="text-4xl font-bold text-primary">87.5%</p>
+                    <p className="text-sm text-muted-foreground mt-2">Overall Attendance</p>
+                    <Badge variant="default" className="mt-3">Excellent</Badge>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="shadow-card bg-gradient-to-br from-academic-green/5 to-academic-green/10 border-academic-green/20">
+                <CardContent className="pt-6">
+                  <div className="text-center">
+                    <div className="inline-flex p-3 bg-academic-green/10 rounded-full mb-3">
+                      <CheckCircle className="h-8 w-8 text-academic-green" />
+                    </div>
+                    <p className="text-4xl font-bold text-academic-green">176</p>
+                    <p className="text-sm text-muted-foreground mt-2">Classes Attended</p>
+                    <Badge variant="secondary" className="mt-3">Out of 201</Badge>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="shadow-card bg-gradient-to-br from-destructive/5 to-destructive/10 border-destructive/20">
+                <CardContent className="pt-6">
+                  <div className="text-center">
+                    <div className="inline-flex p-3 bg-destructive/10 rounded-full mb-3">
+                      <AlertCircle className="h-8 w-8 text-destructive" />
+                    </div>
+                    <p className="text-4xl font-bold text-destructive">25</p>
+                    <p className="text-sm text-muted-foreground mt-2">Classes Missed</p>
+                    <Badge variant="outline" className="mt-3">Stay Alert</Badge>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Subject-wise Attendance */}
+            <Card className="shadow-card">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <CheckCircle className="h-5 w-5" />
-                  Attendance Details
+                <CardTitle className="flex items-center gap-2 text-lg md:text-xl">
+                  <Activity className="h-5 w-5" />
+                  Subject-wise Attendance
                 </CardTitle>
-                <CardDescription>Track your class attendance</CardDescription>
+                <CardDescription>Detailed attendance breakdown for each subject</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
+                <div className="space-y-6">
                   {attendance.map((item, index) => (
-                    <div key={index} className="space-y-2">
-                      <div className="flex justify-between items-center">
-                        <span className="font-medium">{item.subject}</span>
-                        <Badge variant={item.percentage >= 85 ? "default" : item.percentage >= 75 ? "secondary" : "destructive"}>
-                          {item.percentage.toFixed(1)}%
-                        </Badge>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <div className="flex-1 h-2 bg-muted rounded-full overflow-hidden">
-                          <motion.div
-                            initial={{ width: 0 }}
-                            animate={{ width: `${item.percentage}%` }}
-                            transition={{ duration: 0.5, delay: index * 0.1 }}
-                            className={`h-full ${
-                              item.percentage >= 85 ? 'bg-primary' : 
-                              item.percentage >= 75 ? 'bg-secondary' : 'bg-destructive'
-                            }`}
-                          />
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                      className="space-y-3 p-4 rounded-lg border bg-gradient-to-r from-card to-accent/5"
+                    >
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                        <div className="flex-1">
+                          <h4 className="font-semibold text-base md:text-lg">{item.subject}</h4>
+                          <p className="text-sm text-muted-foreground mt-1">
+                            Present: {item.present} | Absent: {item.total - item.present} | Total: {item.total}
+                          </p>
                         </div>
-                        <span className="text-sm text-muted-foreground">
-                          {item.present}/{item.total}
-                        </span>
+                        <div className="flex items-center gap-3">
+                          <Badge 
+                            variant={item.percentage >= 85 ? "default" : item.percentage >= 75 ? "secondary" : "destructive"}
+                            className="text-base px-4 py-1"
+                          >
+                            {item.percentage.toFixed(1)}%
+                          </Badge>
+                        </div>
                       </div>
-                    </div>
+                      
+                      <div className="space-y-2">
+                        <div className="flex justify-between text-xs text-muted-foreground">
+                          <span>Progress</span>
+                          <span>{item.present}/{item.total} classes</span>
+                        </div>
+                        <Progress value={item.percentage} className="h-3" />
+                      </div>
+
+                      {item.percentage < 75 && (
+                        <div className="flex items-start gap-2 p-3 bg-destructive/10 border border-destructive/20 rounded-lg mt-3">
+                          <AlertCircle className="h-4 w-4 text-destructive mt-0.5 flex-shrink-0" />
+                          <div className="text-xs">
+                            <p className="font-medium text-destructive">Warning: Below 75%</p>
+                            <p className="text-muted-foreground mt-1">
+                              You need to attend {Math.ceil((0.75 * item.total - item.present) / 0.25)} more classes to reach 75%
+                            </p>
+                          </div>
+                        </div>
+                      )}
+                    </motion.div>
                   ))}
+                </div>
+
+                <Separator className="my-6" />
+
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div className="text-center p-4 rounded-lg bg-muted">
+                    <p className="text-2xl font-bold">5</p>
+                    <p className="text-xs text-muted-foreground mt-1">Total Subjects</p>
+                  </div>
+                  <div className="text-center p-4 rounded-lg bg-primary/10">
+                    <p className="text-2xl font-bold text-primary">3</p>
+                    <p className="text-xs text-muted-foreground mt-1">Above 85%</p>
+                  </div>
+                  <div className="text-center p-4 rounded-lg bg-destructive/10">
+                    <p className="text-2xl font-bold text-destructive">2</p>
+                    <p className="text-xs text-muted-foreground mt-1">Need Attention</p>
+                  </div>
                 </div>
               </CardContent>
             </Card>
           </TabsContent>
 
           {/* Clubs Tab */}
-          <TabsContent value="clubs" className="space-y-6">
-            <Card>
+          <TabsContent value="clubs" className="space-y-6 mt-6">
+            {/* Current Club */}
+            <Card className="shadow-card bg-gradient-to-br from-primary/5 to-accent/10 border-primary/30">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Users className="h-5 w-5" />
-                  My Clubs
+                <CardTitle className="flex items-center gap-2 text-lg md:text-xl">
+                  <Star className="h-5 w-5 text-primary" />
+                  Your Current Club
                 </CardTitle>
-                <CardDescription>Current membership and available clubs</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {clubs.map((club) => (
-                    <Card key={club.id} className={club.joined ? 'border-primary' : ''}>
-                      <CardHeader>
-                        <CardTitle className="text-base">{club.name}</CardTitle>
-                        <CardDescription>{club.members} members</CardDescription>
-                      </CardHeader>
-                      <CardContent>
-                        {club.joined ? (
-                          <Badge className="w-full justify-center">Current Member</Badge>
-                        ) : (
-                          <Button variant="outline" className="w-full">Join Club</Button>
-                        )}
-                      </CardContent>
-                    </Card>
+                <div className="flex flex-col md:flex-row items-start md:items-center gap-4 p-4 md:p-6 rounded-lg bg-card border-2 border-primary">
+                  <div className="p-4 bg-primary/10 rounded-full">
+                    <Users className="h-8 w-8 text-primary" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-xl md:text-2xl font-bold">{studentData.currentClub}</h3>
+                    <p className="text-muted-foreground mt-1">156 active members</p>
+                    <Badge className="mt-3">Active Member</Badge>
+                  </div>
+                  <Button variant="outline">View Details</Button>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Available Clubs */}
+            <Card className="shadow-card">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2 text-lg md:text-xl">
+                  <Users className="h-5 w-5" />
+                  Explore Other Clubs
+                </CardTitle>
+                <CardDescription>Join more clubs to expand your interests</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {clubs.map((club, index) => (
+                    <motion.div
+                      key={club.id}
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: index * 0.1 }}
+                    >
+                      <Card className={`h-full transition-all hover:shadow-lg ${club.joined ? 'border-primary bg-primary/5' : 'hover:border-primary/50'}`}>
+                        <CardHeader className="pb-3">
+                          <div className="flex items-start justify-between gap-2">
+                            <div>
+                              <CardTitle className="text-base md:text-lg">{club.name}</CardTitle>
+                              <CardDescription className="text-xs mt-1">
+                                <Users className="h-3 w-3 inline mr-1" />
+                                {club.members} members
+                              </CardDescription>
+                            </div>
+                            {club.joined && (
+                              <Badge variant="default" className="text-xs">
+                                <Star className="h-3 w-3 mr-1" />
+                                Joined
+                              </Badge>
+                            )}
+                          </div>
+                        </CardHeader>
+                        <CardContent>
+                          {club.joined ? (
+                            <Button variant="outline" className="w-full" disabled>
+                              <CheckCircle className="h-4 w-4 mr-2" />
+                              Current Member
+                            </Button>
+                          ) : (
+                            <Button variant="default" className="w-full">
+                              Join Club
+                            </Button>
+                          )}
+                        </CardContent>
+                      </Card>
+                    </motion.div>
                   ))}
                 </div>
               </CardContent>
             </Card>
           </TabsContent>
 
-          {/* Notes Tab */}
-          <TabsContent value="notes" className="space-y-6">
-            <Card>
+          {/* Resources Tab */}
+          <TabsContent value="notes" className="space-y-6 mt-6">
+            {/* Study Materials */}
+            <Card className="shadow-card">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
+                <CardTitle className="flex items-center gap-2 text-lg md:text-xl">
                   <FileText className="h-5 w-5" />
                   Study Materials & Notes
                 </CardTitle>
-                <CardDescription>Download notes uploaded by faculty</CardDescription>
+                <CardDescription>Download lecture notes and study resources uploaded by faculty</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
-                  {notes.map((note) => (
-                    <div key={note.id} className="flex items-center justify-between p-4 rounded-lg border">
-                      <div className="flex items-start gap-3">
-                        <BookOpen className="h-5 w-5 text-primary mt-0.5" />
-                        <div>
-                          <p className="font-medium">{note.topic}</p>
+                  {notes.map((note, index) => (
+                    <motion.div
+                      key={note.id}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                      className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-lg border bg-gradient-to-r from-card to-accent/5 hover:shadow-md transition-all"
+                    >
+                      <div className="flex items-start gap-3 flex-1 min-w-0">
+                        <div className="p-2 bg-primary/10 rounded-lg flex-shrink-0">
+                          <BookOpen className="h-5 w-5 text-primary" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="font-medium text-sm md:text-base">{note.topic}</p>
                           <p className="text-sm text-muted-foreground">{note.subject}</p>
                           <p className="text-xs text-muted-foreground mt-1">
                             By {note.uploadedBy} • {note.date}
                           </p>
                         </div>
                       </div>
-                      <Button size="sm" variant="outline">
-                        <Download className="h-4 w-4 mr-2" />
+                      <Button size="sm" variant="outline" className="gap-2 w-full sm:w-auto">
+                        <Download className="h-4 w-4" />
                         Download
                       </Button>
-                    </div>
+                    </motion.div>
                   ))}
                 </div>
               </CardContent>
             </Card>
-          </TabsContent>
 
-          {/* Updates Tab */}
-          <TabsContent value="updates" className="space-y-6">
-            <Card>
+            {/* Magazines & Newsletters */}
+            <Card className="shadow-card">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <BookOpen className="h-5 w-5" />
+                <CardTitle className="flex items-center gap-2 text-lg md:text-xl">
+                  <Newspaper className="h-5 w-5" />
                   Magazines & Newsletters
                 </CardTitle>
+                <CardDescription>Stay updated with campus publications</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
-                  {magazines.map((mag) => (
-                    <div key={mag.id} className="flex items-center justify-between p-4 rounded-lg border">
-                      <div>
-                        <p className="font-medium">{mag.title}</p>
-                        <p className="text-sm text-muted-foreground">{mag.date}</p>
+                  {magazines.map((mag, index) => (
+                    <motion.div
+                      key={mag.id}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                      className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-lg border bg-gradient-to-r from-card to-accent/5 hover:shadow-md transition-all"
+                    >
+                      <div className="flex items-start gap-3 flex-1">
+                        <div className="p-2 bg-academic-gold/10 rounded-lg flex-shrink-0">
+                          <BookOpen className="h-5 w-5 text-academic-gold" />
+                        </div>
+                        <div className="flex-1">
+                          <p className="font-medium text-sm md:text-base">{mag.title}</p>
+                          <p className="text-sm text-muted-foreground mt-1">{mag.date}</p>
+                        </div>
                       </div>
                       <div className="flex gap-2">
-                        <Button size="sm" variant="outline">View</Button>
-                        <Button size="sm">
+                        <Button size="sm" variant="outline" className="flex-1 sm:flex-none">
+                          View
+                        </Button>
+                        <Button size="sm" className="flex-1 sm:flex-none">
                           <Download className="h-4 w-4" />
                         </Button>
                       </div>
-                    </div>
+                    </motion.div>
                   ))}
                 </div>
               </CardContent>
@@ -429,47 +857,73 @@ export default function StudentDashboard() {
           </TabsContent>
 
           {/* Timetable Tab */}
-          <TabsContent value="timetable" className="space-y-6">
-            <Card>
+          <TabsContent value="timetable" className="space-y-6 mt-6">
+            <Card className="shadow-card">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
+                <CardTitle className="flex items-center gap-2 text-lg md:text-xl">
                   <Calendar className="h-5 w-5" />
-                  Weekly Timetable
+                  Weekly Class Schedule
                 </CardTitle>
-                <CardDescription>Your class schedule</CardDescription>
+                <CardDescription>Your complete timetable for the current semester</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
+                <div className="space-y-4 md:space-y-6">
                   {timetable.map((day, index) => (
-                    <div key={index} className="space-y-2">
-                      <h4 className="font-semibold text-primary">{day.day}</h4>
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                      className="space-y-3"
+                    >
+                      <div className="flex items-center gap-2 pb-2 border-b">
+                        <Clock className="h-4 w-4 text-primary" />
+                        <h4 className="font-bold text-base md:text-lg text-primary">{day.day}</h4>
+                      </div>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-3">
                         {day.slots.map((slot, slotIndex) => (
-                          <div
+                          <motion.div
                             key={slotIndex}
-                            className={`p-3 rounded-lg text-center text-sm ${
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ delay: (index * 0.1) + (slotIndex * 0.05) }}
+                            className={`p-3 md:p-4 rounded-lg text-center text-xs md:text-sm font-medium transition-all hover:scale-105 ${
                               slot === 'Free' 
-                                ? 'bg-muted text-muted-foreground' 
-                                : 'bg-primary/10 text-primary font-medium'
+                                ? 'bg-muted text-muted-foreground border border-border' 
+                                : 'bg-gradient-to-br from-primary/10 to-accent/20 text-primary border border-primary/30 shadow-sm'
                             }`}
                           >
                             {slot}
-                          </div>
+                          </motion.div>
                         ))}
                       </div>
-                    </div>
+                    </motion.div>
                   ))}
+                </div>
+
+                <Separator className="my-6" />
+
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <Button variant="outline" className="flex-1 gap-2">
+                    <Download className="h-4 w-4" />
+                    Download Timetable
+                  </Button>
+                  <Button variant="outline" className="flex-1 gap-2">
+                    <Calendar className="h-4 w-4" />
+                    Add to Calendar
+                  </Button>
                 </div>
               </CardContent>
             </Card>
           </TabsContent>
         </Tabs>
+        </motion.div>
       </div>
 
       <StudentSubmissionForm 
         isOpen={isSubmissionOpen} 
         onClose={() => setIsSubmissionOpen(false)} 
       />
-    </PageLayout>
+    </div>
   );
 }
