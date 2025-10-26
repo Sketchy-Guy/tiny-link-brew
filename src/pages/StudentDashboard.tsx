@@ -462,65 +462,248 @@ export default function StudentDashboard() {
             </div>
           </TabsContent>
 
-          {/* Profile Tab */}
-          <TabsContent value="profile" className="space-y-6 mt-6">
-            <Card className="shadow-card">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <User className="h-5 w-5" />
-                  Complete Profile
-                </CardTitle>
-                <CardDescription>Your detailed student information</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-4">
-                    <div>
-                      <p className="text-sm font-medium text-muted-foreground">Full Name</p>
-                      <p className="text-lg font-semibold mt-1">{studentData.name}</p>
+          {/* Profile Tab - Redesigned with Gradients */}
+          <TabsContent value="profile" className="space-y-4 md:space-y-6 mt-6">
+            {/* Profile Header Card with Gradient */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="relative overflow-hidden rounded-2xl"
+            >
+              {/* Gradient Background */}
+              <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary/80 to-accent opacity-90" />
+              <div className="absolute inset-0 bg-grid-white/[0.05] bg-[size:20px_20px]" />
+              
+              {/* Profile Content */}
+              <div className="relative p-6 md:p-8">
+                <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
+                  {/* Avatar Section */}
+                  <motion.div
+                    initial={{ scale: 0.8, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ delay: 0.2 }}
+                    className="relative"
+                  >
+                    <div className="w-24 h-24 md:w-32 md:h-32 rounded-full bg-gradient-to-br from-primary-foreground/20 to-primary-foreground/5 border-4 border-primary-foreground/30 flex items-center justify-center shadow-2xl backdrop-blur-sm">
+                      <User className="w-12 h-12 md:w-16 md:h-16 text-primary-foreground" />
                     </div>
-                    <div>
-                      <p className="text-sm font-medium text-muted-foreground">Roll Number</p>
-                      <p className="text-lg font-semibold mt-1">{studentData.rollNumber}</p>
+                    <div className="absolute -bottom-2 -right-2 bg-academic-gold rounded-full p-2 shadow-lg">
+                      <Star className="w-4 h-4 md:w-5 md:h-5 text-white fill-white" />
                     </div>
-                    <div>
-                      <p className="text-sm font-medium text-muted-foreground">Department</p>
-                      <p className="text-lg font-semibold mt-1">{studentData.department}</p>
+                  </motion.div>
+
+                  {/* Student Info */}
+                  <div className="flex-1 text-center md:text-left">
+                    <motion.div
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.3 }}
+                    >
+                      <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-primary-foreground mb-2">
+                        {studentData.name}
+                      </h2>
+                      <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 md:gap-3 mb-4">
+                        <Badge className="bg-primary-foreground/20 text-primary-foreground border-primary-foreground/30 text-xs md:text-sm">
+                          {studentData.rollNumber}
+                        </Badge>
+                        <Badge className="bg-academic-gold/20 text-primary-foreground border-academic-gold/30 text-xs md:text-sm">
+                          {studentData.semester}
+                        </Badge>
+                      </div>
+                      <p className="text-primary-foreground/90 text-sm md:text-base mb-4">
+                        {studentData.department}
+                      </p>
+                      
+                      {/* Profile Completion */}
+                      <div className="max-w-md mx-auto md:mx-0">
+                        <div className="flex items-center justify-between text-xs md:text-sm text-primary-foreground/80 mb-2">
+                          <span>Profile Completion</span>
+                          <span className="font-semibold">85%</span>
+                        </div>
+                        <div className="h-2 bg-primary-foreground/20 rounded-full overflow-hidden">
+                          <motion.div
+                            initial={{ width: 0 }}
+                            animate={{ width: "85%" }}
+                            transition={{ delay: 0.5, duration: 0.8 }}
+                            className="h-full bg-gradient-to-r from-academic-gold to-primary-foreground rounded-full"
+                          />
+                        </div>
+                      </div>
+                    </motion.div>
+                  </div>
+
+                  {/* Quick Stats on Profile */}
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.4 }}
+                    className="flex md:flex-col gap-3 md:gap-4"
+                  >
+                    <div className="bg-primary-foreground/10 backdrop-blur-sm rounded-xl p-3 md:p-4 border border-primary-foreground/20 text-center min-w-[100px]">
+                      <GraduationCap className="w-5 h-5 md:w-6 md:h-6 text-primary-foreground mx-auto mb-1" />
+                      <p className="text-xl md:text-2xl font-bold text-primary-foreground">8.7</p>
+                      <p className="text-xs text-primary-foreground/70">CGPA</p>
                     </div>
-                    <div>
-                      <p className="text-sm font-medium text-muted-foreground">Current Semester</p>
-                      <p className="text-lg font-semibold mt-1">{studentData.semester}</p>
+                    <div className="bg-primary-foreground/10 backdrop-blur-sm rounded-xl p-3 md:p-4 border border-primary-foreground/20 text-center min-w-[100px]">
+                      <Target className="w-5 h-5 md:w-6 md:h-6 text-primary-foreground mx-auto mb-1" />
+                      <p className="text-xl md:text-2xl font-bold text-primary-foreground">87.5%</p>
+                      <p className="text-xs text-primary-foreground/70">Attendance</p>
+                    </div>
+                  </motion.div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Contact & Academic Details Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+              {/* Contact Information Card */}
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.5 }}
+              >
+                <Card className="shadow-card hover:shadow-elegant transition-all h-full border-l-4 border-l-primary">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2 text-lg md:text-xl">
+                      <div className="p-2 bg-primary/10 rounded-lg">
+                        <Mail className="h-5 w-5 text-primary" />
+                      </div>
+                      Contact Information
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="flex items-start gap-3 p-3 rounded-lg bg-gradient-to-r from-accent/30 to-accent/10 border border-accent/30">
+                      <Mail className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                      <div className="min-w-0">
+                        <p className="text-xs text-muted-foreground mb-1">Email Address</p>
+                        <p className="text-sm md:text-base font-medium break-all">{studentData.email}</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3 p-3 rounded-lg bg-gradient-to-r from-accent/30 to-accent/10 border border-accent/30">
+                      <Phone className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                      <div className="min-w-0">
+                        <p className="text-xs text-muted-foreground mb-1">Phone Number</p>
+                        <p className="text-sm md:text-base font-medium">{studentData.phone}</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3 p-3 rounded-lg bg-gradient-to-r from-accent/30 to-accent/10 border border-accent/30">
+                      <MapPin className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                      <div className="min-w-0">
+                        <p className="text-xs text-muted-foreground mb-1">Campus Address</p>
+                        <p className="text-sm md:text-base font-medium">NIT Campus, Tech City</p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+
+              {/* Academic Details Card */}
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.6 }}
+              >
+                <Card className="shadow-card hover:shadow-elegant transition-all h-full border-l-4 border-l-academic-green">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2 text-lg md:text-xl">
+                      <div className="p-2 bg-academic-green/10 rounded-lg">
+                        <GraduationCap className="h-5 w-5 text-academic-green" />
+                      </div>
+                      Academic Details
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="flex items-start gap-3 p-3 rounded-lg bg-gradient-to-r from-academic-green/10 to-academic-green/5 border border-academic-green/20">
+                      <BookMarked className="h-5 w-5 text-academic-green mt-0.5 flex-shrink-0" />
+                      <div className="min-w-0">
+                        <p className="text-xs text-muted-foreground mb-1">Department</p>
+                        <p className="text-sm md:text-base font-medium">{studentData.department}</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3 p-3 rounded-lg bg-gradient-to-r from-academic-green/10 to-academic-green/5 border border-academic-green/20">
+                      <Calendar className="h-5 w-5 text-academic-green mt-0.5 flex-shrink-0" />
+                      <div className="min-w-0">
+                        <p className="text-xs text-muted-foreground mb-1">Current Semester</p>
+                        <p className="text-sm md:text-base font-medium">{studentData.semester}</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3 p-3 rounded-lg bg-gradient-to-r from-academic-green/10 to-academic-green/5 border border-academic-green/20">
+                      <Users className="h-5 w-5 text-academic-green mt-0.5 flex-shrink-0" />
+                      <div className="min-w-0">
+                        <p className="text-xs text-muted-foreground mb-1">Current Club</p>
+                        <p className="text-sm md:text-base font-medium">{studentData.currentClub}</p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            </div>
+
+            {/* Performance Metrics */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.7 }}
+            >
+              <Card className="shadow-card hover:shadow-elegant transition-all bg-gradient-to-br from-card via-accent/5 to-primary/5">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2 text-lg md:text-xl">
+                    <div className="p-2 bg-academic-gold/10 rounded-lg">
+                      <Activity className="h-5 w-5 text-academic-gold" />
+                    </div>
+                    Performance Metrics
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div className="text-center p-4 rounded-xl bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/20">
+                      <Trophy className="h-6 w-6 md:h-8 md:w-8 text-primary mx-auto mb-2" />
+                      <p className="text-2xl md:text-3xl font-bold text-primary">8.7</p>
+                      <p className="text-xs md:text-sm text-muted-foreground mt-1">Current CGPA</p>
+                    </div>
+                    <div className="text-center p-4 rounded-xl bg-gradient-to-br from-academic-green/10 to-academic-green/5 border border-academic-green/20">
+                      <Target className="h-6 w-6 md:h-8 md:w-8 text-academic-green mx-auto mb-2" />
+                      <p className="text-2xl md:text-3xl font-bold text-academic-green">87.5%</p>
+                      <p className="text-xs md:text-sm text-muted-foreground mt-1">Attendance</p>
+                    </div>
+                    <div className="text-center p-4 rounded-xl bg-gradient-to-br from-academic-gold/10 to-academic-gold/5 border border-academic-gold/20">
+                      <Award className="h-6 w-6 md:h-8 md:w-8 text-academic-gold mx-auto mb-2" />
+                      <p className="text-2xl md:text-3xl font-bold text-academic-gold">12</p>
+                      <p className="text-xs md:text-sm text-muted-foreground mt-1">Achievements</p>
+                    </div>
+                    <div className="text-center p-4 rounded-xl bg-gradient-to-br from-accent/30 to-accent/10 border border-accent/30">
+                      <Zap className="h-6 w-6 md:h-8 md:w-8 text-primary mx-auto mb-2" />
+                      <p className="text-2xl md:text-3xl font-bold text-primary">45</p>
+                      <p className="text-xs md:text-sm text-muted-foreground mt-1">Activities</p>
                     </div>
                   </div>
-                  <div className="space-y-4">
-                    <div>
-                      <p className="text-sm font-medium text-muted-foreground">Email Address</p>
-                      <p className="text-lg font-semibold mt-1 break-all">{studentData.email}</p>
-                    </div>
-                    <div>
-                      <p className="text-sm font-medium text-muted-foreground">Phone Number</p>
-                      <p className="text-lg font-semibold mt-1">{studentData.phone}</p>
-                    </div>
-                    <div>
-                      <p className="text-sm font-medium text-muted-foreground">Current Club</p>
-                      <p className="text-lg font-semibold mt-1">{studentData.currentClub}</p>
-                    </div>
-                    <div>
-                      <p className="text-sm font-medium text-muted-foreground">Overall Attendance</p>
-                      <p className="text-lg font-semibold mt-1">{studentData.attendance}</p>
-                    </div>
-                  </div>
-                </div>
-                <Separator className="my-6" />
-                <div className="flex gap-3">
-                  <Button className="flex-1">Edit Profile</Button>
-                  <Button variant="outline" className="flex-1">
-                    <Download className="h-4 w-4 mr-2" />
-                    Download ID Card
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            {/* Action Buttons */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8 }}
+              className="flex flex-col sm:flex-row gap-3 md:gap-4"
+            >
+              <Button 
+                size="lg" 
+                className="flex-1 gap-2 h-12 md:h-14 text-base shadow-elegant hover:shadow-xl transition-all"
+              >
+                <User className="h-5 w-5" />
+                Edit Profile
+              </Button>
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="flex-1 gap-2 h-12 md:h-14 text-base shadow-card hover:shadow-elegant transition-all"
+              >
+                <Download className="h-5 w-5" />
+                Download ID Card
+              </Button>
+            </motion.div>
           </TabsContent>
 
           {/* Academics Tab */}
