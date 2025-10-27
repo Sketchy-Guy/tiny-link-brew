@@ -1,23 +1,26 @@
 import { useState } from 'react';
-import { PageLayout } from '@/components/page-layout';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Progress } from '@/components/ui/progress';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { StudentSubmissionForm } from '@/components/student-submission-form';
 import { 
   User, Bell, Newspaper, BookOpen, Trophy, Calendar, 
   Users, DollarSign, Download, Home, Clock, CheckCircle,
   AlertCircle, FileText, ChevronRight, Award, GraduationCap,
   TrendingUp, Target, BookMarked, Activity, Mail, Phone,
-  MapPin, UserCircle, Star, Zap
+  MapPin, UserCircle, Star, Zap, Menu, CreditCard, IdCard,
+  CalendarDays, BellRing
 } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function StudentDashboard() {
   const [isSubmissionOpen, setIsSubmissionOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState('overview');
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   // Mock student data
   const studentData = {
@@ -87,10 +90,83 @@ export default function StudentDashboard() {
     { id: 2, title: "Campus Newsletter - Feb 2024", date: "2024-02-15" }
   ];
 
+  // Menu items for hamburger
+  const menuItems = [
+    { label: 'Submit Work', icon: Trophy, action: () => setIsSubmissionOpen(true) },
+    { label: 'Registration Fees', icon: CreditCard, action: () => {} },
+    { label: 'College Due', icon: DollarSign, action: () => {} },
+    { label: 'ID Card', icon: IdCard, action: () => {} },
+    { label: 'Events', icon: CalendarDays, action: () => {} },
+    { label: 'Alerts', icon: BellRing, action: () => {} },
+    { label: 'Clubs', icon: Users, action: () => { setActiveTab('clubs'); setIsMenuOpen(false); } },
+    { label: 'Resources', icon: BookOpen, action: () => { setActiveTab('notes'); setIsMenuOpen(false); } },
+  ];
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-secondary/20 to-accent/30">
-      {/* Modern Hero Header */}
-      <div className="hero-gradient relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-background via-secondary/20 to-accent/30 pb-20 md:pb-8">
+      {/* Mobile Header - Fixed */}
+      <div className="md:hidden fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-primary via-primary/95 to-accent backdrop-blur-lg border-b border-primary-foreground/10 shadow-lg">
+        <div className="flex items-center justify-between px-4 py-3">
+          <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon" className="text-primary-foreground hover:bg-primary-foreground/10">
+                <Menu className="h-5 w-5" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="left" className="w-80 bg-gradient-to-br from-card via-secondary/20 to-accent/10">
+              <SheetHeader>
+                <SheetTitle className="text-left text-xl">Menu</SheetTitle>
+              </SheetHeader>
+              <div className="mt-6 space-y-2">
+                {menuItems.map((item, index) => (
+                  <motion.button
+                    key={item.label}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.05 }}
+                    onClick={item.action}
+                    className="w-full flex items-center gap-3 p-4 rounded-lg hover:bg-primary/10 transition-colors border border-transparent hover:border-primary/20"
+                  >
+                    <div className="p-2 bg-primary/10 rounded-lg">
+                      <item.icon className="h-5 w-5 text-primary" />
+                    </div>
+                    <span className="font-medium">{item.label}</span>
+                  </motion.button>
+                ))}
+              </div>
+            </SheetContent>
+          </Sheet>
+
+          <div className="flex items-center gap-2">
+            <Avatar className="h-8 w-8 border-2 border-primary-foreground/20">
+              <AvatarImage src="" alt={studentData.name} />
+              <AvatarFallback className="bg-primary-foreground/20 text-primary-foreground text-xs font-bold">
+                {studentData.name.split(' ').map(n => n[0]).join('')}
+              </AvatarFallback>
+            </Avatar>
+            <button 
+              onClick={() => setActiveTab('profile')}
+              className="text-primary-foreground font-medium text-sm hover:underline"
+            >
+              Profile
+            </button>
+          </div>
+
+          <Button 
+            variant="ghost" 
+            size="icon"
+            className="text-primary-foreground hover:bg-primary-foreground/10"
+            asChild
+          >
+            <a href="/">
+              <Home className="h-5 w-5" />
+            </a>
+          </Button>
+        </div>
+      </div>
+
+      {/* Desktop Hero Header */}
+      <div className="hero-gradient relative overflow-hidden hidden md:block">
         <div className="absolute inset-0 bg-grid-white/[0.05] bg-[size:20px_20px]" />
         <div className="container relative py-8 md:py-12">
           <motion.div
@@ -112,7 +188,7 @@ export default function StudentDashboard() {
               </div>
               <Button 
                 variant="secondary" 
-                className="gap-2 shadow-lg w-full md:w-auto"
+                className="gap-2 shadow-lg"
                 asChild
               >
                 <a href="/">
@@ -122,7 +198,6 @@ export default function StudentDashboard() {
               </Button>
             </div>
 
-            {/* Quick Stats Cards */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mt-6">
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
@@ -196,86 +271,20 @@ export default function StudentDashboard() {
         </div>
       </div>
 
-      <div className="container py-6 md:py-8 space-y-6">
-        {/* Quick Actions */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 md:gap-4"
-        >
-          <Button 
-            onClick={() => setIsSubmissionOpen(true)} 
-            className="h-auto py-4 md:py-6 flex-col gap-2 shadow-lg hover:shadow-xl transition-all"
+      <div className="container py-6 md:py-8 space-y-6 mt-16 md:mt-0">
+        {/* Main Content - Now controlled by state instead of Tabs */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeTab}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.2 }}
           >
-            <Trophy className="h-5 w-5 md:h-6 md:w-6" />
-            <span className="text-xs md:text-sm">Submit Work</span>
-          </Button>
-          
-          <Button 
-            variant="outline" 
-            className="h-auto py-4 md:py-6 flex-col gap-2 shadow-sm hover:shadow-md transition-all"
-          >
-            <div className="flex flex-col gap-1">
-              <DollarSign className="h-5 w-5 md:h-6 md:w-6 mx-auto" />
-              <span className="text-xs md:text-sm">Registration Fees</span>
-            </div>
-          </Button>
 
-          <Button 
-            variant="outline" 
-            className="h-auto py-4 md:py-6 flex-col gap-2 shadow-sm hover:shadow-md transition-all"
-          >
-            <div className="flex flex-col gap-1">
-              <DollarSign className="h-5 w-5 md:h-6 md:w-6 mx-auto" />
-              <span className="text-xs md:text-sm">College Due</span>
-            </div>
-          </Button>
-
-          <Button 
-            variant="outline" 
-            className="h-auto py-4 md:py-6 flex-col gap-2 shadow-sm hover:shadow-md transition-all"
-          >
-            <Download className="h-5 w-5 md:h-6 md:w-6" />
-            <span className="text-xs md:text-sm">ID Card</span>
-          </Button>
-
-          <Button 
-            variant="outline" 
-            className="h-auto py-4 md:py-6 flex-col gap-2 shadow-sm hover:shadow-md transition-all"
-          >
-            <Calendar className="h-5 w-5 md:h-6 md:w-6" />
-            <span className="text-xs md:text-sm">Events</span>
-          </Button>
-
-          <Button 
-            variant="outline" 
-            className="h-auto py-4 md:py-6 flex-col gap-2 shadow-sm hover:shadow-md transition-all"
-          >
-            <Bell className="h-5 w-5 md:h-6 md:w-6" />
-            <span className="text-xs md:text-sm">Alerts</span>
-          </Button>
-        </motion.div>
-
-        {/* Main Content Tabs */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-        >
-          <Tabs defaultValue="overview" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-1 p-1 bg-card shadow-sm">
-              <TabsTrigger value="overview" className="text-xs md:text-sm">Overview</TabsTrigger>
-              <TabsTrigger value="profile" className="text-xs md:text-sm">Profile</TabsTrigger>
-              <TabsTrigger value="academics" className="text-xs md:text-sm">Academics</TabsTrigger>
-              <TabsTrigger value="attendance" className="text-xs md:text-sm">Attendance</TabsTrigger>
-              <TabsTrigger value="clubs" className="text-xs md:text-sm">Clubs</TabsTrigger>
-              <TabsTrigger value="notes" className="text-xs md:text-sm">Resources</TabsTrigger>
-              <TabsTrigger value="timetable" className="text-xs md:text-sm">Timetable</TabsTrigger>
-            </TabsList>
-
-          {/* Overview Tab */}
-          <TabsContent value="overview" className="space-y-6 mt-6">
+          {/* Overview Content */}
+          {activeTab === 'overview' && (
+            <div className="space-y-6">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6">
               {/* Left Column - Notices & News */}
               <div className="lg:col-span-2 space-y-4 md:space-y-6">
@@ -460,10 +469,12 @@ export default function StudentDashboard() {
                 </Card>
               </div>
             </div>
-          </TabsContent>
+          </div>
+          )}
 
-          {/* Profile Tab - Redesigned with Gradients */}
-          <TabsContent value="profile" className="space-y-4 md:space-y-6 mt-6">
+          {/* Profile Content */}
+          {activeTab === 'profile' && (
+            <div className="space-y-4 md:space-y-6">
             {/* Profile Header Card with Gradient */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -704,10 +715,12 @@ export default function StudentDashboard() {
                 Download ID Card
               </Button>
             </motion.div>
-          </TabsContent>
+          </div>
+          )}
 
-          {/* Academics Tab */}
-          <TabsContent value="academics" className="space-y-6">
+          {/* Academics Content */}
+          {activeTab === 'academics' && (
+            <div className="space-y-6">
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
@@ -747,10 +760,12 @@ export default function StudentDashboard() {
                 </div>
               </CardContent>
             </Card>
-          </TabsContent>
+          </div>
+          )}
 
-          {/* Attendance Tab */}
-          <TabsContent value="attendance" className="space-y-6 mt-6">
+          {/* Attendance Content */}
+          {activeTab === 'attendance' && (
+            <div className="space-y-6">
             {/* Overall Attendance Summary */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <Card className="shadow-card bg-gradient-to-br from-primary/5 to-primary/10 border-primary/20">
@@ -870,10 +885,12 @@ export default function StudentDashboard() {
                 </div>
               </CardContent>
             </Card>
-          </TabsContent>
+          </div>
+          )}
 
-          {/* Clubs Tab */}
-          <TabsContent value="clubs" className="space-y-6 mt-6">
+          {/* Clubs Content */}
+          {activeTab === 'clubs' && (
+            <div className="space-y-6">
             {/* Current Club */}
             <Card className="shadow-card bg-gradient-to-br from-primary/5 to-accent/10 border-primary/30">
               <CardHeader>
@@ -951,10 +968,12 @@ export default function StudentDashboard() {
                 </div>
               </CardContent>
             </Card>
-          </TabsContent>
+          </div>
+          )}
 
-          {/* Resources Tab */}
-          <TabsContent value="notes" className="space-y-6 mt-6">
+          {/* Resources Content */}
+          {activeTab === 'notes' && (
+            <div className="space-y-6">
             {/* Study Materials */}
             <Card className="shadow-card">
               <CardHeader>
@@ -1037,10 +1056,12 @@ export default function StudentDashboard() {
                 </div>
               </CardContent>
             </Card>
-          </TabsContent>
+          </div>
+          )}
 
-          {/* Timetable Tab */}
-          <TabsContent value="timetable" className="space-y-6 mt-6">
+          {/* Timetable Content */}
+          {activeTab === 'timetable' && (
+            <div className="space-y-6">
             <Card className="shadow-card">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-lg md:text-xl">
@@ -1098,10 +1119,94 @@ export default function StudentDashboard() {
                 </div>
               </CardContent>
             </Card>
-          </TabsContent>
-        </Tabs>
+          </div>
+          )}
         </motion.div>
+      </AnimatePresence>
+
+      {/* Bottom Navigation - Mobile Only */}
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-card/95 backdrop-blur-lg border-t border-border shadow-2xl">
+        <div className="grid grid-cols-4 gap-1 p-2">
+          <button
+            onClick={() => setActiveTab('overview')}
+            className={`flex flex-col items-center gap-1 py-2 px-3 rounded-lg transition-all ${
+              activeTab === 'overview'
+                ? 'bg-primary text-primary-foreground shadow-lg scale-105'
+                : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
+            }`}
+          >
+            <Home className="h-5 w-5" />
+            <span className="text-[10px] font-medium">Overview</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('academics')}
+            className={`flex flex-col items-center gap-1 py-2 px-3 rounded-lg transition-all ${
+              activeTab === 'academics'
+                ? 'bg-primary text-primary-foreground shadow-lg scale-105'
+                : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
+            }`}
+          >
+            <GraduationCap className="h-5 w-5" />
+            <span className="text-[10px] font-medium">Academics</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('attendance')}
+            className={`flex flex-col items-center gap-1 py-2 px-3 rounded-lg transition-all ${
+              activeTab === 'attendance'
+                ? 'bg-primary text-primary-foreground shadow-lg scale-105'
+                : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
+            }`}
+          >
+            <Target className="h-5 w-5" />
+            <span className="text-[10px] font-medium">Attendance</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('timetable')}
+            className={`flex flex-col items-center gap-1 py-2 px-3 rounded-lg transition-all ${
+              activeTab === 'timetable'
+                ? 'bg-primary text-primary-foreground shadow-lg scale-105'
+                : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
+            }`}
+          >
+            <Clock className="h-5 w-5" />
+            <span className="text-[10px] font-medium">Timetable</span>
+          </button>
+        </div>
       </div>
+
+      {/* Desktop Navigation Tabs */}
+      <div className="hidden md:block sticky top-0 z-40 bg-card/95 backdrop-blur-lg border-b border-border shadow-sm mb-6">
+        <div className="container">
+          <div className="flex items-center gap-2 overflow-x-auto py-3">
+            {[
+              { id: 'overview', label: 'Overview', icon: Home },
+              { id: 'profile', label: 'Profile', icon: UserCircle },
+              { id: 'academics', label: 'Academics', icon: GraduationCap },
+              { id: 'attendance', label: 'Attendance', icon: Target },
+              { id: 'clubs', label: 'Clubs', icon: Users },
+              { id: 'notes', label: 'Resources', icon: BookOpen },
+              { id: 'timetable', label: 'Timetable', icon: Clock },
+            ].map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg whitespace-nowrap transition-all ${
+                  activeTab === tab.id
+                    ? 'bg-primary text-primary-foreground shadow-md'
+                    : 'hover:bg-accent hover:text-accent-foreground'
+                }`}
+              >
+                <tab.icon className="h-4 w-4" />
+                <span className="text-sm font-medium">{tab.label}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
 
       <StudentSubmissionForm 
         isOpen={isSubmissionOpen} 
