@@ -1179,9 +1179,9 @@ export default function StudentDashboard() {
       </div>
 
       {/* Desktop Navigation Tabs */}
-      <div className="hidden md:block sticky top-0 z-40 bg-card/95 backdrop-blur-lg border-b border-border shadow-sm mb-6">
+      <div className="hidden md:block sticky top-0 z-40 bg-background/95 backdrop-blur-lg border-b border-border/40 shadow-sm">
         <div className="container">
-          <div className="flex items-center gap-2 overflow-x-auto py-3">
+          <div className="flex items-center gap-3 overflow-x-auto py-4 scrollbar-hide">
             {[
               { id: 'overview', label: 'Overview', icon: Home },
               { id: 'profile', label: 'Profile', icon: UserCircle },
@@ -1194,14 +1194,14 @@ export default function StudentDashboard() {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center gap-2 px-4 py-2 rounded-lg whitespace-nowrap transition-all ${
+                className={`flex items-center gap-2 px-5 py-2.5 rounded-full whitespace-nowrap transition-all font-medium ${
                   activeTab === tab.id
-                    ? 'bg-primary text-primary-foreground shadow-md'
-                    : 'hover:bg-accent hover:text-accent-foreground'
+                    ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/25'
+                    : 'text-muted-foreground hover:text-foreground hover:bg-accent/50'
                 }`}
               >
                 <tab.icon className="h-4 w-4" />
-                <span className="text-sm font-medium">{tab.label}</span>
+                <span className="text-sm">{tab.label}</span>
               </button>
             ))}
           </div>
